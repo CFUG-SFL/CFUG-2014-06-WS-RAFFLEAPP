@@ -56,14 +56,10 @@
     <cfscript>
         pointstodistribute = {
             'Chris Lee'         : [ 1, 3, 0, 0, 0],
-            'James Harvey'      : [ 4, 4, 4, 2, 0],
             'Geoff Bergey'      : [ 4, 3, 4, 0, 1],
             'Bill Reese'        : [ 5, 0, 4, 0, 2],
-            'Acker Apple'       : [ 3, 0, 0, 0, 0],
             'Jose Maestri'      : [ 2, 3, 0, 0, 0],
             'Oscar Contreras'   : [ 0, 2, 0, 0, 0],
-            'Richard Hughes'    : [ 0, 2, 0, 0, 0],
-            'Jose Rodriguez'    : [ 1, 1, 0, 0, 0],
             'Doug Roberson'     : [ 0, 1, 0, 0, 0]
         };
     </cfscript>
@@ -81,7 +77,7 @@
                         group activity for this year. Below is a table for points being awarded to active members.
                     </p>
                     <p>
-                        By default everyone gets who registers today gets a point which is as valuable as 1 raffle ticket.
+                        By default everyone who registers today gets a point which is as valuable as 1 raffle ticket.
                         Each point just means more tickets. At the end of the meeting we will run a simple
                         ColdFusion <a href="https://wikidocs.adobe.com/wiki/display/coldfusionen/RandRange" target="_blank">RandRange</a> function against the total number of tickets and the
                         value returned will choose a winner based on position in the array that we will generate.
@@ -124,22 +120,14 @@
     </div>
     </cfoutput>
 
+    <cfwebsocket    name        = "ws"
+                    onMessage   = "messageHandler"
+                    subscribeTo = "raffle"
+                    secure      = "#cgi.server_port_secure#">
+
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-    <script>
-        var BootstrapVersion = 3, FontAwesomeVersion = 4;
-        _cf_loadingtexthtml     = '';
-        _cf_contextpath         = '';
-        _cf_ajaxscriptsrc       = '/cfide/scripts/ajax';
-        _cf_jsonprefix          = '//';
-        _cf_websocket_port      = 8575;
-        _cf_flash_policy_port   = 1243;
-        _cf_clientid            = '';
-    </script>
-    <script src="/cfide/scripts/ajax/messages/cfmessage.js"></script>
-    <script src="/cfide/scripts/ajax/package/cfajax.js"></script>
-    <script src="/cfide/scripts/ajax/package/cfwebsocketcore.js"></script>
-    <script src="/cfide/scripts/ajax/package/cfwebsocketchannel.js"></script>
+    <script> var BootstrapVersion = 3, FontAwesomeVersion = 4;</script>
     <script src="assets/validation.min.js"></script>
     <script src="assets/websocket.js"></script>
     <cfif  application.winnerselected>
@@ -149,6 +137,5 @@
         </script>
         </cfoutput>
     </cfif>
-
 </body>
 </html>

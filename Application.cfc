@@ -18,7 +18,6 @@ component{
         automanageSession       : false,
         cfclocation             : "/orm/",
         dbcreate                : "dropcreate",
-        dialect                 : "MicrosoftSQLServer",
         flushatrequestend       : false,
         logSQL                  : false,
         useDBForMapping         : false

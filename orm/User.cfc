@@ -10,7 +10,7 @@ component
     property name="id"                  fieldtype="id"          generator="native";
     property name="fullname"            ormtype="string"        length="255";
     property name="email"               ormtype="string"        length="255";
-    property name="hash"               ormtype="string"        length="255";
+    property name="hash"                ormtype="string"        length="255";
     property name="points"              ormtype="integer"       default="1";
     property name="created"             ormtype="timestamp"     notnull="true" required="true";
     property name="updated"             ormtype="timestamp";

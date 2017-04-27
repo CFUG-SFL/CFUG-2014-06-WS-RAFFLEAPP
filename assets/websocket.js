@@ -3,20 +3,6 @@ var cfws,
     frm      = $('#entryFrm'),
     users    = [];
 
-// initialize websocket
-_cf_websockets_init = function(){
-    cfws = ColdFusion.WebSocket.init(   'cfws',
-                                        'cfug_raffle_20140614', // application name
-                                        '',                     // cflogin bs id - never use this crap
-                                        'raffle',               // channel
-                                        messageHandler,         // messageHandler
-                                        null,                   // openHandler
-                                        null,                   // closeHandler
-                                        null,                   // errorHandler
-                                        location.pathname);
-};
-ColdFusion.Event.registerOnLoad(_cf_websockets_init);
-
 // registration closed
 if (frm.data('open') === false)
     messageHandler({'data':{'process':'close-registration'}});
@@ -41,7 +27,6 @@ function messageHandler(messageobj){
             openDialog({noheader:true,noerror:true,message:'<h1>Winner!!!!!</h1><p>Congratulations to ...</p>' + formatUser(messageobj.data.user),nofooter:true,dostatic:true});
         }
     }
-
 }
 
 function processUser(user){
