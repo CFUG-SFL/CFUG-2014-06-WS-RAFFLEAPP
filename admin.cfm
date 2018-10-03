@@ -2,7 +2,7 @@
     // form posts
     if (cgi.REQUEST_METHOD == "POST"){
         // processs login
-        if (structKeyExists(form,"password") && form.password == "cfug!1234"){
+        if (structKeyExists(form,"password") && form.password == "123456"){
             session.auth = true;
             location("./",false);
         }

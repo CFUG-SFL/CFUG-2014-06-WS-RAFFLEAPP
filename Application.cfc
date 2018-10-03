@@ -31,6 +31,10 @@ component{
         return true;
     }
 
+    function onError(exception,eventName){
+        writeDump(arguments.exception);
+    }
+
     public boolean function onRequestStart(targetPage){
         // reload orm
         if (structKeyExists(url,"reload")){
