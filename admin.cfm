@@ -15,6 +15,16 @@
 
             switch (form.process){
 
+                case "new-raffle":
+                    lock scope="application" timeout="10" {
+                        application.registrationopen    = true;
+                        application.winnerselected      = false;
+                        application.winner              = {};
+                        ormExecuteQuery("DELETE FROM User");
+                        location("./",false);
+                    }
+                break;
+
                 case "save":
                     if (!isNull(user)){
                         user.setPoints(form.points);
@@ -118,32 +128,39 @@
     <meta charset="UTF-8">
     <title>ColdFusion Software Raffle Admin</title>
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon"/>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,600">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../assets/theme.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/theme.css">
 </head>
 <body class="#structKeyExists(session,'auth') ? '' : 'login'#">
     <div class="container">
         <cfif structKeyExists(session,"auth")>
             <div class="page-header">
-                <a href="./?logout=1" class="btn btn-danger pull-right">Logout</a>
+                <div class="pull-right">
+                    <a href="/clients/" class="btn btn-info" data-toggle="modal">Clients</a>
+                    <a href="./?logout=1" class="btn btn-danger">Logout</a>
+                </div>
                 <cfif !application.winnerselected>
                     <form class="pull-right" style="margin-right:5px;" action="./" method="post">
-                    <cfif application.registrationopen>
-                        <input type="hidden" name="process" value="close">
-                        <button type="submit" class="btn btn-default">Close Registration</button>
-                    <cfelse>
-                        <input type="hidden" name="process" value="open">
-                        <button type="submit" class="btn btn-success">Open Registration</button>
-                    </cfif>
+                        <cfif application.registrationopen>
+                            <input type="hidden" name="process" value="close">
+                            <button type="submit" class="btn btn-default">Close Registration</button>
+                        <cfelse>
+                            <input type="hidden" name="process" value="open">
+                            <button type="submit" class="btn btn-success">Open Registration</button>
+                        </cfif>
                     </form>
                 </cfif>
                 <cfif !application.registrationopen && !application.winnerselected>
                     <form class="pull-right" style="margin-right:5px;" action="./" method="post">
                         <input type="hidden" name="process" value="select-winner">
                         <button type="submit" class="btn btn-primary">Select Winner</button>
+                    </form>
+                </cfif>
+                <cfif !application.registrationopen && application.winnerselected>
+                    <form class="pull-right" style="margin-right:5px;" action="./" method="post">
+                        <input type="hidden" name="process" value="new-raffle">
+                        <button type="submit" class="btn btn-primary">Start New Raffle</button>
                     </form>
                 </cfif>
                 <h1>Raffle Admin <small>Registration <cfif application.registrationopen> Open<cfelse>Closed</cfif></small></h1>
@@ -168,7 +185,7 @@
                             <td><input type="number" class="form-control" value="#user.getPoints()#" data-id="#user.getID()#" /></td>
                             <td class="text-right">
                                 <button type="button" class="btn btn-primary" data-role="save"><i class="fa fa-save"></i></button>
-                                <button type="button" class="btn btn-danger" data-role="delete"><i class="fa fa-trash-o"></i></button>
+                                <button type="button" class="btn btn-danger" data-role="delete"><i class="fa fa-trash"></i></button>
                             </td>
                         </tr>
                     </cfloop>
@@ -177,14 +194,27 @@
         <cfelse>
             <form class="form-signin simple-validation" id="loginFrm" role="form" action="./" method="POST">
                 <input type="password" name="password" class="form-control required" placeholder="Password" title="Password Required">
+                <span class="help-block text-center">Default password is <code>123456</code></span>
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
             </form>
         </cfif>
     </div>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-    <script src="../assets/validation.min.js"></script>
-    <script src="../assets/admin.js"></script>
+    <div class="modal fade" id="subscribers" role="dialog" >
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Subscribers</h4>
+                </div>
+                <div class="modal-body"></div>
+            </div>
+        </div>
+    </div>
+    <cfinclude template="signature.cfm" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/assets/validation.min.js"></script>
+    <script src="/assets/admin.js"></script>
 </body>
 </html>
 </cfoutput>

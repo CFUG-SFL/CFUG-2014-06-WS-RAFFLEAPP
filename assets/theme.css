@@ -1,5 +1,22 @@
-body{
-    font-family: 'Source Sans Pro', sans-serif;
+body, table {
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+body table[class^=cfdump]{
+  font-family: 'OperatorMonoSSm-Book',Menlo,Consolas, monospace;
+  font-size:11px;
+}
+body {
+  padding-bottom: 100px;
+}
+#sig {
+  position: fixed;
+  bottom:0;
+  width: 100vw;
+  background-color: #eee;
+  border-top:1px solid #ddd;
+  padding: 1em;
+  margin:0;
+  text-align: center;
 }
 .modal-content{
     border-radius:0;

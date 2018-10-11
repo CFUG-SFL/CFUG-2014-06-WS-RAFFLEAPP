@@ -1,9 +1,9 @@
 component{
 
-    this.name                           = "cfug_raffle_20140614";
+    this.name                           = "cfug_raffle";
     this.sessionmanagement              = true;
     this.sessiontimeout                 = createTimeSpan(1,0,0,0);
-    this.datasource                     = "cfug_raffle_20140614";
+    this.datasource                     = "cfug_raffle";
 
     // websockets
     this.wschannels=[{name="raffle"}];
@@ -20,7 +20,8 @@ component{
         dbcreate                : "dropcreate",
         flushatrequestend       : false,
         logSQL                  : false,
-        useDBForMapping         : false
+        useDBForMapping         : false,
+        dialect                 : 'Derby'
     };
 
 
@@ -32,6 +33,24 @@ component{
     }
 
     function onError(exception,eventName){
+        // requires setup
+        if (arguments.exception.message.find("Datasource #this.datasource# could not be found")){
+            var admin = createObject("component","cfide.adminapi.administrator").login('commandbox');
+            var db = createObject("component","cfide.adminapi.datasource");
+            if (!db.verifyDSN("cfug_raffle")){
+                try{
+                    db.setDerbyEmbedded(
+                        name        : "cfug_raffle",
+                        database    : expandPath("./db"),
+                        isnewdb     : true
+                    );
+                    location("./",false);
+                }
+                catch(any e){
+                    writeDump(e);
+                }
+            }
+        }
         writeDump(arguments.exception);
     }
 
@@ -45,5 +64,4 @@ component{
         }
         return true;
     }
-
 }

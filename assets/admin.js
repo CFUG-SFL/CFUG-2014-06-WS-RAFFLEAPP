@@ -1,6 +1,10 @@
 var BootstrapVersion = 3, FontAwesomeVersion = 4;
 
 $(function(){
+    var subscribers = $('#subscribers').modal({
+        backdrop : 'static',
+        show : false
+    });
     $('button[data-role]').on('click',function(){
 
         var me = $(this),
@@ -40,6 +44,12 @@ $(function(){
                 });
             break;
         }
-
     });
+    $('a[data-toggle="modal"]').on('click',function(){
+        $.ajax(this.href)
+        .done(function(response){
+            subscribers.find('.modal-body').html(response).end().modal('show');
+        })
+        return false;
+    })
 });

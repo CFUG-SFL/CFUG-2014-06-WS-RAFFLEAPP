@@ -1,12 +1,17 @@
-cfug-20140614
-=============
+# The Raffle App ( cfug-20140614 )
 
-CFUG RAFFLE APP
+This app was created to process our online raffles for our ColdFusion User Group. It was
+also done as an example of what we can do with WebSockets.
 
-This is meant for a simple install on IIS7+ ( I did not include an .htaccess for Apache but if you need it let me know)
+## Run using CommandBox
+You can easily run this application using CommandBox. Simply clone this repo to your local machine
+and execute the ``box start`` command at the root folder .
 
-Create an empty DB in your MS SQL Server or any server (just remove the dialect from the orm settings)
+## Running using your own WebServer
+If you are running in IIS or Apache with a physical ColdFusion install make sure to create an
+Apache Derby database with the name of ``cfug_raffle`` or go into the ``APplication.cfc`` and
+add your Administrator credentials in the ``onError`` function, so it automatically creates it
+for you.
 
-Add the Datasource in your ColdFusion Admin called cfug_raffle_20140614 or if you decide to change update in Application.cfc
-
-Start app and go - all files should be accessed without the cfm (rewrites used) for instance, accessing admin, use the url /admin/ instead of admin.cfm just to avoid assets from not being loaded properly. I could add a Rewrite Rule to handle this but for now it was a quick get up and go for the day.
+## Conferences
+* ColdFusion Summit 2018

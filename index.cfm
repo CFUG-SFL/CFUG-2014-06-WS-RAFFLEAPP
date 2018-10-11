@@ -3,17 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>ColdFusion Software Raffle</title>
-    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon"/>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,600">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="./assets/theme.css">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/theme.css">
 </head>
 <body>
 
     <div class="jumbotron">
       <div class="container">
+        <a href="/admin/" class="pull-right btn btn-default" target="_blank">RAFFLE ADMIN</a>
         <h1>CFUG Software Raffle</h1>
         <p>
             Enter your email name and email address to register for today's raffle below<br />
@@ -46,7 +45,6 @@
             </div>
             <div class="col-sm-8">
                 <div class="row" id="users">
-
                 </div>
             </div>
         </div>
@@ -120,15 +118,17 @@
     </div>
     </cfoutput>
 
+    <cfinclude template="signature.cfm" />
+
     <cfwebsocket    name        = "ws"
                     onMessage   = "messageHandler"
                     subscribeTo = "raffle">
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script> var BootstrapVersion = 3, FontAwesomeVersion = 4;</script>
-    <script src="assets/validation.min.js"></script>
-    <script src="assets/websocket.js"></script>
+    <script src="/assets/validation.min.js"></script>
+    <script src="/assets/websocket.js"></script>
     <cfif  application.winnerselected>
         <cfoutput>
         <script>
